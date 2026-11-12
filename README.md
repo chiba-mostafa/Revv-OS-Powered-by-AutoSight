@@ -48,7 +48,7 @@ Revv OS is a multi-tenant B2B SaaS platform for automotive dealerships. Powered 
 _Use this path to explore pre-generated vehicles, test the 3D player, and test vehicle reservation without waiting to generate new stories:_
 
 1. Sign in with the **Demo Dealership Account** (credentials provided in the Devpost submission).
-2. From the **Inventory** tab, select any vehicle (e.g., Kia Telluride) and open its 3D interactive showroom or public microsite.
+2. Go to **Studio** in the sidebar, click on any generated vehicle story to launch the AutoSight 3D player.
 3. Interact with the 3D WebGL car, camera director views, and interactive hotspots.
 4. Click **"Reserve Vehicle ($500 PayPal Deposit)"** in the playback control bar, or request a reservation from the **AutoSense AI assistant**.
 5. When the PayPal window opens, log in with the **PayPal Sandbox Buyer Account** to authorize the refundable \$500 hold deposit.
