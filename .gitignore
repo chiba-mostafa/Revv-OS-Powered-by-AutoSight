@@ -15,6 +15,5 @@ server/temp/
 venv/
 *credentials*.json
 .github/
-README.md
 
 
