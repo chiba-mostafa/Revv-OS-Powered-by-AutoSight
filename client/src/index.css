@@ -1,0 +1,246 @@
+/* 1. Import the Tailwind V4 Engine */
+@import "tailwindcss";
+@plugin '../hero.ts';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-revv-blue: #0088ff;
+  --color-revv-dark: #0f172a;
+}
+
+body {
+  background-color: #f9fafb;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #0f172a;
+  }
+}
+
+/* ── Editor Premium Transitions — Apple Intelligence / Gemini aesthetic ── */
+
+/* Iridescent conic gradient that rotates endlessly */
+@keyframes conic-spin {
+  to {
+    --conic-angle: 360deg;
+  }
+}
+
+@property --conic-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* The orbiting gradient ring used by the cinematic sweep & regen */
+.ai-ring {
+  --size: 120px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--conic-angle),
+    #6366f1 0%,
+    #8b5cf6 15%,
+    #d946ef 30%,
+    #f472b6 45%,
+    #38bdf8 60%,
+    #34d399 75%,
+    #6366f1 100%
+  );
+  animation: conic-spin 3s linear infinite;
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    #000 calc(100% - 2.5px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    #000 calc(100% - 2.5px)
+  );
+}
+
+.ai-ring-lg {
+  --size: 160px;
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #000 calc(100% - 3.5px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #000 calc(100% - 3.5px)
+  );
+}
+
+/* Softer glow behind the ring */
+.ai-ring-glow {
+  width: var(--size, 120px);
+  height: var(--size, 120px);
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--conic-angle),
+    rgba(99, 102, 241, 0.15) 0%,
+    rgba(139, 92, 246, 0.12) 15%,
+    rgba(217, 70, 239, 0.15) 30%,
+    rgba(244, 114, 182, 0.12) 45%,
+    rgba(56, 189, 248, 0.15) 60%,
+    rgba(52, 211, 153, 0.12) 75%,
+    rgba(99, 102, 241, 0.15) 100%
+  );
+  filter: blur(30px);
+  animation: conic-spin 3s linear infinite;
+}
+
+/* Breathing dot trio — Gemini-style thinking indicator */
+@keyframes breathe-1 {
+  0%,
+  100% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  33% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes breathe-2 {
+  0%,
+  100% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes breathe-3 {
+  0%,
+  100% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  66% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.dot-breathe-1 {
+  animation: breathe-1 1.8s ease-in-out infinite;
+}
+.dot-breathe-2 {
+  animation: breathe-2 1.8s ease-in-out infinite 0.15s;
+}
+.dot-breathe-3 {
+  animation: breathe-3 1.8s ease-in-out infinite 0.3s;
+}
+
+/* Shimmer sweep for skeletons */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Pill success flash */
+@keyframes pill-success {
+  0% {
+    background-color: rgba(52, 211, 153, 0.25);
+  }
+  100% {
+    background-color: rgba(52, 211, 153, 0.08);
+  }
+}
+
+/* Ghost card aurora — warm traveling highlight */
+@keyframes ghost-aurora {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.ghost-aurora-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(99, 102, 241, 0.06) 0%,
+    rgba(139, 92, 246, 0.12) 25%,
+    rgba(217, 70, 239, 0.08) 50%,
+    rgba(56, 189, 248, 0.12) 75%,
+    rgba(99, 102, 241, 0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation: ghost-aurora 3s ease-in-out infinite;
+}
+
+/* Scale-in for cinematic sweep reveal */
+@keyframes sweep-scale-reveal {
+  0% {
+    transform: scale(1.04);
+    opacity: 0;
+    filter: blur(12px);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Floating orb particle field */
+@keyframes float-particle {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.3);
+    opacity: 0.8;
+  }
+}
+
+/* Morphing blob behind the regen sparkle */
+@keyframes morph-blob {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: rotate(0deg);
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: rotate(180deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: conic-spin 3s linear infinite;
+}
+
+/* ── Chromium backdrop-filter compositing fix ─────────────────────────────────
+   Promotes elements with backdrop-blur to their own compositing layer.
+   This prevents the Chromium bug where backdrop-filter stops rendering when
+   the element or a parent has active CSS transforms (e.g. framer-motion
+   animations, CSS transitions with transform).
+   Using isolation + will-change instead of transform: translateZ(0) to avoid
+   overriding Tailwind/framer-motion transforms on the same element. */
+[class*="backdrop-blur"] {
+  isolation: isolate;
+  will-change: backdrop-filter;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}

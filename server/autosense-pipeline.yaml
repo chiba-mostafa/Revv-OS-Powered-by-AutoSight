@@ -1,0 +1,103 @@
+main:
+  params: [args]
+  steps:
+    - initVariables:
+        assign:
+          - storyId: ${args.storyId}
+          - dealerInput: ${args.dealerInput}
+          - backendUrl: "https://api.revv-os.live/api/workflow"
+
+    - stepIngestion:
+        try:
+          call: http.post
+          args:
+            url: ${backendUrl + "/ingest"}
+            body:
+              storyId: ${storyId}
+              dealerInput: ${dealerInput}
+            timeout: 60
+        retry:
+          max_retries: 2
+          backoff:
+            initial_delay: 2
+            max_delay: 10
+            multiplier: 2
+
+    - stepAnalyst:
+        try:
+          call: http.post
+          args:
+            url: ${backendUrl + "/analyze"}
+            body:
+              storyId: ${storyId}
+            timeout: 120
+        retry:
+          max_retries: 1
+          backoff:
+            initial_delay: 5
+            max_delay: 15
+
+    - stepDirector:
+        try:
+          call: http.post
+          args:
+            url: ${backendUrl + "/direct"}
+            body:
+              storyId: ${storyId}
+            timeout: 120
+        retry:
+          max_retries: 1
+
+    - stepScriptwriter:
+        try:
+          call: http.post
+          args:
+            url: ${backendUrl + "/script"}
+            body:
+              storyId: ${storyId}
+            timeout: 120
+        retry:
+          max_retries: 1
+
+    - stepVisualizer:
+        try:
+          call: http.post
+          args:
+            url: ${backendUrl + "/visualize"}
+            body:
+              storyId: ${storyId}
+            # 🚀 INCREASED: 10 minutes total for Images + Vision + Video
+            timeout: 600
+        # 🚨 CRITICAL: Set retries to 0 to stop the "Zombie Loop"
+        retry:
+          max_retries: 0
+
+    - stepAudio:
+        try:
+          call: http.post
+          args:
+            url: ${backendUrl + "/audio"}
+            body:
+              storyId: ${storyId}
+            # 🚀 INCREASED: 5 minutes for multi-scene TTS
+            timeout: 300
+        retry:
+          max_retries: 1
+
+    - stepQAAndFinalize:
+        try:
+          call: http.post
+          args:
+            url: ${backendUrl + "/qa"}
+            body:
+              storyId: ${storyId}
+            timeout: 120
+          result: finalResult
+        retry:
+          max_retries: 2
+
+    - completePipeline:
+        return:
+          status: "SUCCESS"
+          storyId: ${storyId}
+          finalResponse: ${finalResult.body}
